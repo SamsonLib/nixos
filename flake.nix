@@ -31,7 +31,7 @@
 	  home-manager = {
 	    useGlobalPkgs = true;
 	    useUserPackages = true;
-	    users.samson = import ./home.nix;
+	    users.samson = import ./home/home.nix;
 	  };
         }
       ];
