@@ -27,13 +27,11 @@
     };
     polarity = "dark";
     cursor = {
-      package = mcmojave-hyprcursor.packages.${pkgs.system}.default;
+      package = mcmojave-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default;
       size = 24;
       name = "McMojave";
     };
   };
-
-  programs.nixvim.enable = true;
 
   networking.hostName = "aurelius";
   networking.networkmanager.enable = true;
@@ -93,8 +91,7 @@
     vim
     git
     wget
-    mcmojave-hyprcursor.packages.${pkgs.system}.default
-
+    mcmojave-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
  
   security.sudo.wheelNeedsPassword = false;
