@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, mcmojave-hyprcursor, ... }:
 
 {
   imports =
@@ -24,9 +24,9 @@
     };
     polarity = "dark";
     cursor = {
-      package = pkgs.simp1e-cursors;
+      package = mcmojave-hyprcursor.packages.${pkgs.system}.default;
       size = 24;
-      name = "Simp1e Cursors";
+      name = "McMojave";
     };
   };
 
@@ -88,6 +88,8 @@
     vim
     git
     wget
+    mcmojave-hyprcursor.packages.${pkgs.system}.default
+
   ];
  
   security.sudo.wheelNeedsPassword = false;

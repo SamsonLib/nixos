@@ -18,7 +18,7 @@
     mcmojave-hyprcursor.url = "github:libadoxon/mcmojave-hyprcursor";
   };
 
-  outputs = { nixpkgs, stylix, home-manager, ... }: let
+  outputs = { nixpkgs, stylix, home-manager, mcmojave-hyprcursor, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -35,6 +35,7 @@
 	  };
         }
       ];
+      specialArgs = { inherit mcmojave-hyprcursor; };
     };
   };
 }
