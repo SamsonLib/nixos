@@ -15,6 +15,9 @@
     };
   };
 
+  fonts.packages = [
+    pkgs.nerd-fonts.lilex
+  ];
 
   stylix = {
     enable = true;
