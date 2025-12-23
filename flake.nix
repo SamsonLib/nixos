@@ -16,15 +16,9 @@
     };
     
     mcmojave-hyprcursor.url = "github:libadoxon/mcmojave-hyprcursor";
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
-  outputs = { nixpkgs, stylix, home-manager, nixvim, mcmojave-hyprcursor, ... }: let
+  outputs = { nixpkgs, stylix, home-manager, mcmojave-hyprcursor, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -37,11 +31,6 @@
 	  home-manager = {
 	    useGlobalPkgs = true;
 	    useUserPackages = true;
-
-            sharedModules = [
-              nixvim.homeModules.nixvim
-            ];
-
 	    users.samson = import ./home/home.nix;
 	  };
         }

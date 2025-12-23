@@ -4,6 +4,7 @@
   imports = [
     ./hyprland.nix
     ./fish.nix
+    ./emacs.nix
   ];
 
   home.stateVersion = "25.11";
@@ -22,11 +23,6 @@
       ];
     })
   ];
-
-  programs.nixvim = {
-    enable = true;
-    defaultEditor = true;
-  };
 
   programs.kitty.enable = true;
   programs.kitty.settings.confirm_os_window_close = 0;
