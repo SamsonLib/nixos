@@ -14,6 +14,12 @@
   home.packages = with pkgs; [
     eza
     blueman
+    (prismlauncher.override {
+      jdks = [
+        jdk25_headless
+	jdk8
+      ];
+    })
   ];
  
   programs.kitty.enable = true;
