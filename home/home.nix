@@ -4,6 +4,7 @@
   imports = [
     ./hyprland.nix
     ./fish.nix
+    ./neovim.nix
   ];
 
   home.stateVersion = "25.11";
