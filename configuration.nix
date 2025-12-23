@@ -33,6 +33,8 @@
     };
   };
 
+  programs.nixvim.enable = true;
+
   networking.hostName = "aurelius";
   networking.networkmanager.enable = true;
 
