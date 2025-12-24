@@ -30,6 +30,8 @@
   programs.rofi.enable = true;
   programs.firefox.enable = true;
 
+  programs.zoxide.enable = true;
+
   programs.git = {
     enable = true;
     settings = {
