@@ -4,7 +4,6 @@
   imports = [
     ./hyprland.nix
     ./fish.nix
-    ./emacs.nix
   ];
 
   home.stateVersion = "25.11";
@@ -14,6 +13,7 @@
   home.homeDirectory = "/home/samson";
 
   home.packages = with pkgs; [
+    vscode
     eza
     blueman
     (prismlauncher.override {
@@ -31,6 +31,12 @@
   programs.firefox.enable = true;
 
   programs.zoxide.enable = true;
+
+  programs.direnv = {
+    enable = true;
+    # enableFishIntegration = lib.mkForce true;
+    nix-direnv.enable = true;
+  };
 
   programs.git = {
     enable = true;

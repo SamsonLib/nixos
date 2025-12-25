@@ -60,10 +60,14 @@
     extraGroups = [ "wheel" "networkmanager" "video" "input" ]; # Enable ‘sudo’ for the user.
   };
 
+  services.printing.enable = true;
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
+
+  programs.steam.enable = true;
 
   hardware = {
     graphics.enable = true;
