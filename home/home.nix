@@ -32,6 +32,41 @@
 
   programs.zoxide.enable = true;
 
+  programs.neovim = {
+    enable = true;
+
+    plugins = with pkgs.vimPlugins; [
+      nvim-lspconfig
+      nvim-treesitter.withAllGrammars
+      telescope-nvim
+      conform-nvim
+      nvim-autopairs
+      comment-nvim
+      lualine-nvim
+      blink-cmp
+      todo-comments-nvim
+      trouble-nvim
+      undotree
+    ];
+
+    extraPackages = with pkgs; [
+      # formatters
+      ruff
+      stylua
+      alejandra
+
+      # language servers
+      pyright
+      lua-language-server
+      nil
+    ];
+  };
+
+  xdg.configFile."nvim/init.lua" = {
+    enable = true;
+    source = ./nvim/init.lua;
+  };
+
   programs.direnv = {
     enable = true;
     # enableFishIntegration = lib.mkForce true;

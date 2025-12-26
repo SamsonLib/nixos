@@ -67,6 +67,13 @@
     xwayland.enable = true;
   };
 
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    defaultEditor = true;
+  };
+
   programs.steam.enable = true;
 
   hardware = {
@@ -92,9 +99,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    vim
-    git
-    wget
     mcmojave-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
  
