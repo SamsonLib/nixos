@@ -32,8 +32,14 @@
 
   programs.zoxide.enable = true;
 
+  # stylix.targets.neovim.enable = false;
+
   programs.neovim = {
     enable = true;
+
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
 
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
@@ -47,6 +53,9 @@
       todo-comments-nvim
       trouble-nvim
       undotree
+      mini-nvim
+      mini-base16
+      neo-tree-nvim
     ];
 
     extraPackages = with pkgs; [
@@ -60,11 +69,11 @@
       lua-language-server
       nil
     ];
-  };
 
-  xdg.configFile."nvim/init.lua" = {
-    enable = true;
-    source = ./nvim/init.lua;
+    extraLuaConfig = ''
+      vim.g.mapleader = " "
+      vim.opt.relativenumber = true
+    '';
   };
 
   programs.direnv = {

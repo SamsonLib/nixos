@@ -16,15 +16,22 @@
     };
     
     mcmojave-hyprcursor.url = "github:libadoxon/mcmojave-hyprcursor";
+
+    ptrace-inject.url = "path:/home/samson/Projects/ptrace-inject";
   };
 
-  outputs = { nixpkgs, stylix, home-manager, mcmojave-hyprcursor, ... }: let
+  outputs = { nixpkgs, stylix, ptrace-inject, home-manager, mcmojave-hyprcursor, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     nixosConfigurations.aurelius = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+        ({ pkgs, ... }: {
+          environment.systemPackages = [
+            ptrace-inject.packages.${system}.default
+          ];
+        })
 	stylix.nixosModules.stylix
         ./configuration.nix
         home-manager.nixosModules.home-manager {
