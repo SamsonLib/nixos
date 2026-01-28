@@ -22,24 +22,15 @@
 	jdk8
       ];
     })
-    discord
     obsidian
-    ripgrep
     wget
-    (jetbrains.idea-oss.override {
-	
-    })
-    jdk25
     curl
     krita
     brave
     yazi
     blender
-    gimp
     anki
     filezilla
-    kdePackages.kate
-    libreoffice
     nil
     nixd
     zed-editor

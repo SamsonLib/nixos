@@ -121,7 +121,7 @@
 
   users.users.samson = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" "input" "plugdev" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "video" "input" "plugdev" ];
   };
 
   services.avahi = {

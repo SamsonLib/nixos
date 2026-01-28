@@ -18,6 +18,7 @@
     tree  = "eza -T --icons=always";
     ls = "eza --icons=always";
     ll = "eza --icons=always -la";
+    nurse = "sudo nixos-rebuild switch";
   };
 
   programs.fish = {
