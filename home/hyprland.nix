@@ -20,6 +20,13 @@
         kb_options = "caps:escape";
       };
 
+      device = {
+        name = "sec_e-pen";
+	output = "HDMI-A-1";
+	transform = "3";
+	rotation = "90";
+      };
+
       animations.enabled = "false";
 
       general.gaps_out = "4";
@@ -42,15 +49,15 @@
         "$mainMod, v, togglefloating,"
         "$mainMod SHIFT, x, exec, $browser_private"
 
-	"$mainMod, left, movefocus, l"
-        "$mainMod, right, movefocus, r"
-        "$mainMod, up, movefocus, u"
-        "$mainMod, down, movefocus, d"
+	"$mainMod, h, movefocus, l"
+        "$mainMod, l, movefocus, r"
+        "$mainMod, k, movefocus, u"
+        "$mainMod, j, movefocus, d"
 
-	"$mainMod SHIFT, left, movewindow, l"
-	"$mainMod SHIFT, right, movewindow, r"
-	"$mainMod SHIFT, up, movewindow, u"
-	"$mainMod SHIFT, down, movewindow, d"
+	"$mainMod SHIFT, h, movewindow, l"
+	"$mainMod SHIFT, l, movewindow, r"
+	"$mainMod SHIFT, k, movewindow, u"
+	"$mainMod SHIFT, j, movewindow, d"
 
         "$mainMod, Ampersand, split:workspace, 1"
         "$mainMod, Bracketleft, split:workspace, 2"

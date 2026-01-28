@@ -22,15 +22,48 @@
 	jdk8
       ];
     })
+    discord
+    obsidian
+    ripgrep
+    wget
+    (jetbrains.idea-oss.override {
+	
+    })
+    jdk25
+    curl
+    krita
+    brave
+    yazi
+    blender
+    gimp
+    anki
+    filezilla
+    kdePackages.kate
+    libreoffice
+    nil
+    nixd
+    zed-editor
   ];
 
-  programs.kitty.enable = true;
-  programs.kitty.settings.confirm_os_window_close = 0;
+  programs.kitty = {
+    enable = true;
+
+    settings = {
+      shell = "fish";
+      show_hyperlink_targets = "yes";
+      enable_audio_bell = false;
+      confirm_os_window_close = 0;
+      font_family = "Lilex Nerd Font Mono";
+      features = "+zero +ss04 +ss01";
+    };
+  };
 
   programs.rofi.enable = true;
   programs.firefox.enable = true;
 
   programs.zoxide.enable = true;
+  programs.bat.enable = true;
+  programs.fzf.enable = true;
 
   # stylix.targets.neovim.enable = false;
 

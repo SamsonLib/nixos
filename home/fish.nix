@@ -70,7 +70,11 @@
             $stat \
             $nix_indicator
         end
-      ''; 
+      '';
+
+      nr = ''
+	nix run nixpkgs#$argv[1]
+      '';
     };
 
 

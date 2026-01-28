@@ -18,9 +18,11 @@
     mcmojave-hyprcursor.url = "github:libadoxon/mcmojave-hyprcursor";
 
     ptrace-inject.url = "path:/home/samson/Projects/ptrace-inject";
+
+    hytale-launcher.url = "github:TNAZEP/HytaleLauncherFlake";
   };
 
-  outputs = { nixpkgs, stylix, ptrace-inject, home-manager, mcmojave-hyprcursor, ... }: let
+  outputs = { nixpkgs, stylix, ptrace-inject, home-manager, mcmojave-hyprcursor, hytale-launcher, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -30,6 +32,7 @@
         ({ pkgs, ... }: {
           environment.systemPackages = [
             ptrace-inject.packages.${system}.default
+	    hytale-launcher.packages.${system}.default
           ];
         })
 	stylix.nixosModules.stylix
