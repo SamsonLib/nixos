@@ -18,9 +18,11 @@
     mcmojave-hyprcursor.url = "github:libadoxon/mcmojave-hyprcursor";
 
     hytale-launcher.url = "github:TNAZEP/HytaleLauncherFlake";
+
+    blender.url = "path:./blender.nix";
   };
 
-  outputs = { nixpkgs, stylix, home-manager, mcmojave-hyprcursor, hytale-launcher, ... }: let
+  outputs = { nixpkgs, stylix, home-manager, mcmojave-hyprcursor, hytale-launcher, blender, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -30,6 +32,7 @@
         ({ pkgs, ... }: {
           environment.systemPackages = [
 	    hytale-launcher.packages.${system}.default
+	    blender.packages.${system}.default
           ];
         })
 	stylix.nixosModules.stylix

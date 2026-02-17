@@ -13,26 +13,30 @@
   home.homeDirectory = "/home/samson";
 
   home.packages = with pkgs; [
-    vscode
+    # vscode
     eza
     blueman
     (prismlauncher.override {
       jdks = [
         jdk25_headless
+	jdk17
 	jdk8
+	# jdk8
       ];
     })
     obsidian
     wget
     curl
     krita
-    brave
-    yazi
-    blender
+    google-chrome
+    # yazi
+    # blender
     anki
     filezilla
     nil
     nixd
+    # aseprite
+    godot-mono
     zed-editor
   ];
 
@@ -66,32 +70,32 @@
     vimAlias = true;
 
     plugins = with pkgs.vimPlugins; [
-      nvim-lspconfig
-      nvim-treesitter.withAllGrammars
-      telescope-nvim
-      conform-nvim
+      # nvim-lspconfig
+      # nvim-treesitter.withAllGrammars
+      # telescope-nvim
+      # conform-nvim
       nvim-autopairs
-      comment-nvim
-      lualine-nvim
-      blink-cmp
-      todo-comments-nvim
-      trouble-nvim
-      undotree
-      mini-nvim
-      mini-base16
+      # comment-nvim
+      # lualine-nvim
+      # blink-cmp
+      # todo-comments-nvim
+      # trouble-nvim
+      # undotree
+      # mini-nvim
+      # mini-base16
       neo-tree-nvim
     ];
 
     extraPackages = with pkgs; [
       # formatters
-      ruff
-      stylua
-      alejandra
+      # ruff
+      # stylua
+      # alejandra
 
       # language servers
-      pyright
-      lua-language-server
-      nil
+      # pyright
+      # lua-language-server
+      # nil
     ];
 
     extraLuaConfig = ''

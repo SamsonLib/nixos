@@ -33,6 +33,8 @@
       EVDEV_ABS_18=::4096
   '';
 
+  programs.nix-ld.enable = true;
+
   stylix = {
     enable = true;
     # Greek Head
@@ -183,18 +185,17 @@
   environment.systemPackages = with pkgs; [
     mcmojave-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     vim
-    wineWowPackages.stable
-    wine
-    (wine.override { wineBuild = "wine64"; })
-    wine64
-    wineWowPackages.staging
-    winetricks
-    wineWowPackages.waylandFull
-    icu
-    icu78
+    # icu
+    # icu78
     wireguard-tools
     protonvpn-gui
+
+    wineWowPackages.stable
+    wine64
+    # winetricks
   ];
+
+  programs.steam.protontricks.enable = true;
  
   security.sudo.wheelNeedsPassword = false;
 
