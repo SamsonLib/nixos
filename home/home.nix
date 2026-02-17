@@ -38,9 +38,6 @@
     # aseprite
     godot-mono
     zed-editor
-    (builtins.fetchTarball {
-	url = "https://cdn.builder.blender.org/download/daily/blender-5.2.0-alpha+main.1280201420ea-linux.x86_64-release.tar.xz";
-    }) {};
   ];
 
   programs.kitty = {
