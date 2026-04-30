@@ -4,9 +4,16 @@
   imports = [
     ./hyprland.nix
     ./fish.nix
-    ./kitty.nix
-    ./git.nix
   ];
+
+  programs.git = {
+    enable = true;
+    settings = {
+      user.name = "Samson Liebscher";
+      user.email = "samson.gw21@gmail.com";
+      safe.directory = "/etc/nixos/";
+    };
+  };
 
   home.stateVersion = "25.11";
 
@@ -30,17 +37,13 @@
     wget
     blockbench
     nil
-    heroic
     nixd
     hyprshot
     flow-control
     wireguard-tools
     protonvpn-gui
-    openrgb-with-all-plugins
-    aseprite
     fzf
     firefox
-    prusa-slicer
     hyprcursor
     krita
     ffmpeg
@@ -49,7 +52,7 @@
     vscode
     zed-editor
     (blender.override {
-	cudaSupport = true;
+      cudaSupport = true;
     })
     chatterino7
     (nemo-with-extensions.override {
@@ -70,6 +73,18 @@
       "org/cinnamon/desktop/applications/terminal" = {
         exec = "kitty";
       };
+    };
+  };
+
+  programs.kitty = {
+    enable = true;
+    settings = {
+      shell = "fish";
+      show_hyprlink_targets = "yes";
+      enable_audio_bell = false;
+      confirm_os_window_close = 0;
+      font_family = "Lilex Nerd Font Mono";
+      features = "+zero +ss04 +ss01";
     };
   };
 

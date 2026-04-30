@@ -1,0 +1,45 @@
+{
+  description = "My Home NixOS-Flake";
+
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs =
+    inputs@{ nixpkgs, ... }:
+    {
+      homeConfigurations.samson = inputs.home-manager.lib.homeManagerConfiguration {
+        modules = [
+          inputs.stylix.homeModules.stylix
+        ];
+      };
+
+      nixosConfigurations.aurelius = nixpkgs.lib.nixosSystem {
+        modules = [
+          inputs.home-manager.nixosModules.home-manager
+          ./configuration.nix
+
+          (
+            { ... }:
+            {
+              # environment.systemPackages = [
+              #   inputs.hytale-launcher.packages.${pkgs.stdenv.hostPlatform.system}.default
+              # ];
+
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.samson = import ./home/home.nix;
+              };
+            }
+          )
+        ];
+      };
+    };
+}
