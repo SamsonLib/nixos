@@ -11,7 +11,7 @@
       home-manager.useUserPackages = true;
 
       home-manager.sharedModules = [
-        inputs.stylix.homeManagerModules.stylix
+        inputs.stylix.homeModules.stylix
       ];
 
       home-manager.users.samson = { ... }: {
