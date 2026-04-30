@@ -7,10 +7,11 @@
         self.nixosModules.aureliusHardware
         self.nixosModules.hyprland
         self.nixosModules.kitty
-        self.nixosModules.rofi
-        self.nixosModules.zed
-        self.nixosModules.zoxide
         self.nixosModules.git
+        self.nixosModules.zed
+        self.nixosModules.rofi
+        self.nixosModules.zoxide
+        self.nixosModules.stylix
       ];
 
       boot.loader = {
@@ -145,6 +146,7 @@
 
       environment.systemPackages = [
         pkgs.vim
+        pkgs.firefox
       ];
 
       programs.steam = {
