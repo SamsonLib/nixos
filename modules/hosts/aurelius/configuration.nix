@@ -6,10 +6,8 @@
       imports = [
         self.nixosModules.aureliusHardware
         self.nixosModules.hyprland
-        self.nixosModules.kitty
         self.nixosModules.git
         self.nixosModules.zed
-        self.nixosModules.rofi
         self.nixosModules.zoxide
         inputs.home-manager.nixosModules.home-manager
         inputs.stylix.nixosModules.stylix
@@ -18,15 +16,21 @@
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.samson = { ... }: {
+        imports = [
+          self.homeModules.kitty
+          self.homeModules.rofi
+        ];
         home.username = "samson";
         home.homeDirectory = "/home/samson";
 
         home.stateVersion = "26.05";
         programs.home-manager.enable = true;
+
       };
 
       stylix = {
         enable = true;
+        homeManagerIntegration.autoImport = true;
         image = pkgs.fetchurl { url = "https://w.wallhaven.cc/full/x8/wallhaven-x8eydz.jpg"; hash = "sha256-/QEHUeOFtvkxSN9J9yE+5l7lJgHfgAZhTz+0OHg8m8k="; };
       };
 
