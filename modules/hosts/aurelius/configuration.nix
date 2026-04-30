@@ -11,8 +11,8 @@
         self.nixosModules.zed
         self.nixosModules.rofi
         self.nixosModules.zoxide
-        #self.nixosModules.stylix
-        self.nixosModules.hm
+        self.nixosModules.stylix
+        self.nixosModules.homeManager
       ];
 
       boot.loader = {
