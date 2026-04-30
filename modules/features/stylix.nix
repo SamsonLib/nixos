@@ -4,7 +4,7 @@
     { pkgs, lib, ... }:
     {
       imports = [
-        inputs.stylix.nixosModules.stylix
+        inputs.stylix.homeModules.stylix
       ];
 
       stylix = {

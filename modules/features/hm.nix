@@ -10,6 +10,10 @@
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
 
+      home-manager.sharedModules = [
+        inputs.stylix.homeManagerModules.stylix
+      ];
+
       home-manager.users.samson = { ... }: {
         home.username = "samson";
         home.homeDirectory = "/home/samson";
