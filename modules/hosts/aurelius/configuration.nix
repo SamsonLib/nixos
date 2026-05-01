@@ -27,14 +27,12 @@
                 self.homeManagerModules.obsidian
                 self.homeManagerModules.firefox
                 self.homeManagerModules.nemo
+                self.homeManagerModules.blender
               ];
 
               home.packages = with pkgs; [
                 hyprshot
                 chatterino7
-                (blender.override {
-                  cudaSupport = true;
-                })
               ];
 
               home.stateVersion = "25.11";
