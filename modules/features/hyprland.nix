@@ -1,117 +1,101 @@
-{ self, inputs, ... }:
+{ ... }:
 {
-  flake.nixosModules.hyprland =
-    { pkgs, lib, ... }:
-    {
-      environment.systemPackages = [
-        self.packages.${pkgs.stdenv.hostPlatform.system}.myHyprland
-      ];
-
-      programs.hyprland = {
-        enable = true;
-        package = self.packages.${pkgs.stdenv.hostPlatform.system}.myHyprland;
-      };
-    };
-
-  perSystem =
+  flake.homeManagerModules.hyprland =
     { pkgs, ... }:
     {
-      packages.myHyprland =
-        let
-          hyprsplit = pkgs.hyprlandPlugins.hyprsplit;
-          hyprlandConf = pkgs.writeText "hyprland.conf" ''
-            exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd \
-              DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY \
-              XDG_CURRENT_DESKTOP XDG_SESSION_TYPE \
-              && systemctl --user stop hyprland-session.target \
-              && systemctl --user start hyprland-session.target
-            exec-once = hyprctl plugin load ${hyprsplit}/lib/libhyprsplit.so
+      wayland.windowManager.hyprland = {
+        enable = true;
 
-            $browser = firefox
-            $browser_private = firefox --private-window
-            $mainMod = SUPER
-            $menu = pkill rofi || rofi -show drun
-            $screenshot = hyprshot -m region
-            $terminal = kitty
-            $window_selector = pkill rofi || rofi -show window
+        plugins = [
+          pkgs.hyprlandPlugins.hyprsplit
+        ];
 
-            animations {
-              enabled = false
-            }
+        settings = {
+          monitor = [
+            "HDMI-A-1,1920x1080@75,1920x0,1"
+            "DP-3,1920x1080@180,0x0,1"
+          ];
 
-            bind = $mainMod, return, exec, $terminal
-            bind = $mainMod, space, exec, $menu
-            bind = $mainMod, Semicolon, killactive
-            bind = $mainMod, w, exec, $window_selector
-            bind = $mainMod, x, exec, $browser
-            bind = $mainMod, f, fullscreen,
-            bind = $mainMod, v, togglefloating,
-            bind = $mainMod SHIFT, x, exec, $browser_private
-            bind = $mainMod SHIFT, s, exec, $screenshot
-            bind = $mainMod, h, movefocus, l
-            bind = $mainMod, l, movefocus, r
-            bind = $mainMod, k, movefocus, u
-            bind = $mainMod, j, movefocus, d
-            bind = $mainMod SHIFT, h, movewindow, l
-            bind = $mainMod SHIFT, l, movewindow, r
-            bind = $mainMod SHIFT, k, movewindow, u
-            bind = $mainMod SHIFT, j, movewindow, d
-            bind = $mainMod, Ampersand,    split:workspace, 1
-            bind = $mainMod, Bracketleft,  split:workspace, 2
-            bind = $mainMod, Braceleft,    split:workspace, 3
-            bind = $mainMod, Braceright,   split:workspace, 4
-            bind = $mainMod, Parenleft,    split:workspace, 5
-            bind = $mainMod, Equal,        split:workspace, 6
-            bind = $mainMod, Asterisk,     split:workspace, 7
-            bind = $mainMod, Parenright,   split:workspace, 8
-            bind = $mainMod, Plus,         split:workspace, 9
-            bind = $mainMod, Bracketright, split:workspace, 10
-            bind = $mainMod SHIFT, Ampersand,    split:movetoworkspace, 1
-            bind = $mainMod SHIFT, Bracketleft,  split:movetoworkspace, 2
-            bind = $mainMod SHIFT, Braceleft,    split:movetoworkspace, 3
-            bind = $mainMod SHIFT, Braceright,   split:movetoworkspace, 4
-            bind = $mainMod SHIFT, Parenleft,    split:movetoworkspace, 5
-            bind = $mainMod SHIFT, Equal,        split:movetoworkspace, 6
-            bind = $mainMod SHIFT, Asterisk,     split:movetoworkspace, 7
-            bind = $mainMod SHIFT, Parenright,   split:movetoworkspace, 8
-            bind = $mainMod SHIFT, Plus,         split:movetoworkspace, 9
-            bind = $mainMod SHIFT, Bracketright, split:movetoworkspace, 10
+          input = {
+            kb_layout = "us, de";
+            kb_variant = "dvp";
+            kb_options = "caps:escape,grp:alt_space_toggle";
+          };
 
-            bindm = $mainMod, mouse:272, movewindow
-            bindm = $mainMod, mouse:273, resizewindow
+          device = {
+            name = "sec_e-pen";
+            output = "HDMI-A-1";
+            transform = "3";
+            rotation = "90";
+          };
 
-            device {
-              name = sec_e-pen
-              output = HDMI-A-1
-              rotation = 90
-              transform = 3
-            }
+          animations.enabled = "false";
 
-            general {
-              gaps_in = 0
-              gaps_out = 0
-            }
+          general.gaps_out = "0";
+          general.gaps_in = "0";
 
-            input {
-              kb_layout = us, de
-              kb_options = caps:escape,grp:alt_space_toggle
-              kb_variant = dvp
-            }
+          "$terminal" = "kitty";
+          "$menu" = "pkill rofi || rofi -show drun";
+          "$window_selector" = "pkill rofi || rofi -show window";
+          "$browser" = "firefox";
+          "$browser_private" = "firefox --private-window";
+          "$screenshot" = "hyprshot -m region";
 
-            monitor = HDMI-A-1, 1920x1080@75,  1920x0, 1
-            monitor = DP-3,     1920x1080@180, 0x0,    1
+          "$mainMod" = "SUPER";
+          bind = [
+            "$mainMod, return, exec, $terminal"
+            "$mainMod, space, exec, $menu"
+            "$mainMod, Semicolon, killactive"
+            "$mainMod, w, exec, $window_selector"
+            "$mainMod, x, exec, $browser"
+            "$mainMod, f, fullscreen,"
+            "$mainMod, v, togglefloating,"
+            "$mainMod SHIFT, x, exec, $browser_private"
+            "$mainMod SHIFT, s, exec, $screenshot"
 
-            windowrule = match:class .*, suppress_event maximize
-            windowrule = match:class ^$, match:title ^$, match:xwayland true, match:float true, match:fullscreen true, match:pin true, no_initial_focus on
-          '';
-        in
-        inputs.wrapper-modules.lib.wrapPackage (
-          { ... }:
-          {
-            inherit pkgs;
-            package = pkgs.hyprland;
-            env.HYPRLAND_CONFIG = "${hyprlandConf}";
-          }
-        );
+            "$mainMod, h, movefocus, l"
+            "$mainMod, l, movefocus, r"
+            "$mainMod, k, movefocus, u"
+            "$mainMod, j, movefocus, d"
+
+            "$mainMod SHIFT, h, movewindow, l"
+            "$mainMod SHIFT, l, movewindow, r"
+            "$mainMod SHIFT, k, movewindow, u"
+            "$mainMod SHIFT, j, movewindow, d"
+
+            "$mainMod, Ampersand, split:workspace, 1"
+            "$mainMod, Bracketleft, split:workspace, 2"
+            "$mainMod, Braceleft, split:workspace, 3"
+            "$mainMod, Braceright, split:workspace, 4"
+            "$mainMod, Parenleft, split:workspace, 5"
+            "$mainMod, Equal, split:workspace, 6"
+            "$mainMod, Asterisk, split:workspace, 7"
+            "$mainMod, Parenright, split:workspace, 8"
+            "$mainMod, Plus, split:workspace, 9"
+            "$mainMod, Bracketright, split:workspace, 10"
+
+            "$mainMod SHIFT, Ampersand, split:movetoworkspace, 1"
+            "$mainMod SHIFT, Bracketleft, split:movetoworkspace, 2"
+            "$mainMod SHIFT, Braceleft, split:movetoworkspace, 3"
+            "$mainMod SHIFT, Braceright, split:movetoworkspace, 4"
+            "$mainMod SHIFT, Parenleft, split:movetoworkspace, 5"
+            "$mainMod SHIFT, Equal, split:movetoworkspace, 6"
+            "$mainMod SHIFT, Asterisk, split:movetoworkspace, 7"
+            "$mainMod SHIFT, Parenright, split:movetoworkspace, 8"
+            "$mainMod SHIFT, Plus, split:movetoworkspace, 9"
+            "$mainMod SHIFT, Bracketright, split:movetoworkspace, 10"
+          ];
+
+          bindm = [
+            "$mainMod, mouse:272, movewindow"
+            "$mainMod, mouse:273, resizewindow"
+          ];
+
+          windowrule = [
+            "match:class .*, suppress_event maximize"
+            "match:class ^$, match:title ^$,match:xwayland true,match:float true,match:fullscreen true,match:pin true, no_initial_focus on"
+          ];
+        };
+      };
     };
 }

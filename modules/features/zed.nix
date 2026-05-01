@@ -1,16 +1,19 @@
-{ self, inputs, ... }:
+{ ... }:
 {
-  flake.nixosModules.zed =
-    { pkgs, lib, ... }:
+  flake.homeManagerModules.zed =
+    { pkgs, ... }:
     {
-      environment.systemPackages = [
-        pkgs.zed-editor
-      ];
-    };
+      # https://github.com/zed-industries/extensions/tree/main/extensions
+      programs.zed-editor = {
+        enable = true;
+        extraPackages = [
+          pkgs.nixd
+          pkgs.nil
+        ];
 
-  # perSystem =
-  #   { pkgs, lib, ... }:
-  #   {
-  #     packages.myKitty = inputs.wrapper-modules.wrappers.kitty.wrap { inherit pkgs; };
-  #   };
+        extensions = [
+          "nix"
+        ];
+      };
+    };
 }

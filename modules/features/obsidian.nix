@@ -1,9 +1,9 @@
 { ... }:
 {
-  flake.homeManagerModules.rofi =
+  flake.homeManagerModules.obsidian =
     { ... }:
     {
-      programs.rofi = {
+      programs.obsidian = {
         enable = true;
       };
     };

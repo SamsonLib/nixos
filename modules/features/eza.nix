@@ -1,9 +1,9 @@
 { ... }:
 {
-  flake.homeManagerModules.rofi =
+  flake.homeManagerModules.eza =
     { ... }:
     {
-      programs.rofi = {
+      programs.eza = {
         enable = true;
       };
     };

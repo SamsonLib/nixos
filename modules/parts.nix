@@ -1,4 +1,9 @@
-{
+{ lib, ... }: {
+  options.flake.homeManagerModules = lib.mkOption {
+    type = lib.types.attrsOf lib.types.unspecified;
+    default = {};
+  };
+
   config = {
     systems = [
       "x86_64-linux"

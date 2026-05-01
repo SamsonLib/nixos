@@ -5,33 +5,57 @@
     {
       imports = [
         self.nixosModules.aureliusHardware
-        self.nixosModules.hyprland
         self.nixosModules.git
-        self.nixosModules.zed
         self.nixosModules.zoxide
-        inputs.home-manager.nixosModules.home-manager
         inputs.stylix.nixosModules.stylix
+        inputs.home-manager.nixosModules.home-manager
       ];
 
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.users.samson = { ... }: {
-        imports = [
-          self.homeModules.kitty
-          self.homeModules.rofi
-        ];
-        home.username = "samson";
-        home.homeDirectory = "/home/samson";
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users = {
+          samson =
+            { ... }:
+            {
+              imports = [
+                self.homeManagerModules.kitty
+                self.homeManagerModules.rofi
+                self.homeManagerModules.hyprland
+                self.homeManagerModules.zed
+                self.homeManagerModules.eza
+                self.homeManagerModules.obsidian
+                self.homeManagerModules.firefox
+                self.homeManagerModules.nemo
+              ];
 
-        home.stateVersion = "26.05";
-        programs.home-manager.enable = true;
+              home.packages = with pkgs; [
+                hyprshot
+                chatterino7
+                (blender.override {
+                  cudaSupport = true;
+                })
+              ];
 
+              home.stateVersion = "25.11";
+              home.username = "samson";
+              programs.home-manager.enable = true;
+              home.homeDirectory = "/home/samson";
+            };
+        };
       };
+
+      environment.systemPackages = [
+        pkgs.vim
+      ];
 
       stylix = {
         enable = true;
-        homeManagerIntegration.autoImport = true;
-        image = pkgs.fetchurl { url = "https://w.wallhaven.cc/full/x8/wallhaven-x8eydz.jpg"; hash = "sha256-/QEHUeOFtvkxSN9J9yE+5l7lJgHfgAZhTz+0OHg8m8k="; };
+        image = pkgs.fetchurl {
+          url = "https://w.wallhaven.cc/full/po/wallhaven-powqje.jpg";
+          hash = "sha256-6whG3D30UjQ40WDbwCxYFtI0fOb81KildTNhAcebYek=";
+        };
+        polarity = "dark";
       };
 
       boot.loader = {
@@ -162,11 +186,6 @@
 
       fonts.packages = [
         pkgs.nerd-fonts.lilex
-      ];
-
-      environment.systemPackages = [
-        pkgs.vim
-        pkgs.firefox
       ];
 
       programs.steam = {

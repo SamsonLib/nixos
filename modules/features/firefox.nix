@@ -1,9 +1,9 @@
 { ... }:
 {
-  flake.homeManagerModules.rofi =
+  flake.homeManagerModules.firefox =
     { ... }:
     {
-      programs.rofi = {
+      programs.firefox = {
         enable = true;
       };
     };

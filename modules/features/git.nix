@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
   flake.nixosModules.git =
-    { pkgs, lib, ... }:
+    { pkgs, ... }:
     {
       programs.git = {
         enable = true;
@@ -14,7 +14,7 @@
       };
     };
   perSystem =
-    { pkgs, lib, ... }:
+    { pkgs, ... }:
     {
       packages.myGit = inputs.wrapper-modules.wrappers.git.wrap {
         inherit pkgs;

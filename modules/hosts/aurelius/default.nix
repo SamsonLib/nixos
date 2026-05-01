@@ -5,4 +5,11 @@
       self.nixosModules.aureliusConfiguration
     ];
   };
+
+  flake.homeConfigurations.samson =
+    inputs.lib.homeManagerConfiguration {
+      modules = [
+        #self.homeModules.kitty
+      ];
+    };
 }

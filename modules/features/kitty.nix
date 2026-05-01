@@ -1,8 +1,10 @@
-{ self, inputs, ... }:
+{ ... }:
 {
-  flake.homeModules.kitty =
-    { pkgs, lib, ... }:
+  flake.homeManagerModules.kitty =
+    { ... }:
     {
-      programs.kitty.enable = true;
+      programs.kitty = {
+        enable = true;
+      };
     };
 }
