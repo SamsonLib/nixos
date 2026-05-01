@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosModules.zoxide =
+  flake.homeManagerModules.zoxide =
     { ... }:
     {
       programs.zoxide = {

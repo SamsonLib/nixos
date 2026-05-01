@@ -6,7 +6,6 @@
       imports = [
         self.nixosModules.aureliusHardware
         self.nixosModules.git
-        self.nixosModules.zoxide
         inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager
       ];
@@ -19,17 +18,19 @@
           { ... }:
           {
             imports = [
-              self.homeManagerModules.terminal
-              self.homeManagerModules.rofi
-              self.homeManagerModules.hyprland
-              self.homeManagerModules.zed
-              self.homeManagerModules.eza
               self.homeManagerModules.bat
-              self.homeManagerModules.obsidian
-              self.homeManagerModules.firefox
-              self.homeManagerModules.nemo
               self.homeManagerModules.blender
+              self.homeManagerModules.eza
+              self.homeManagerModules.firefox
+              self.homeManagerModules.hyprland
+              self.homeManagerModules.nemo
+              self.homeManagerModules.obsidian
               self.homeManagerModules.prismlauncher
+              self.homeManagerModules.rofi
+              self.homeManagerModules.terminal
+              self.homeManagerModules.zed
+              self.homeManagerModules.zoxide
+              self.homeManagerModules.direnv
             ];
 
             home.packages = with pkgs; [
