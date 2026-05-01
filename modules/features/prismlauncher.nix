@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeManagerModules.eza =
+  flake.homeManagerModules.prismlauncher =
     { pkgs, ... }:
     {
       home.packages = [

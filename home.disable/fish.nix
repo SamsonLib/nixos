@@ -13,16 +13,16 @@
     '';
   };
 
-  programs.fish.shellAliases = {
-    trea = "eza -Ta --icons=always";
-    tree = "eza -T --icons=always";
-    ls = "eza --icons=always";
-    ll = "eza --icons=always -la";
-    nurse = "sudo nixos-rebuild switch";
-  };
-
   programs.fish = {
     enable = true;
+
+    shellAliases = {
+      trea = "eza -Ta --icons=always";
+      tree = "eza -T --icons=always";
+      ls = "eza --icons=always";
+      ll = "eza --icons=always -la";
+      nurse = "sudo nixos-rebuild switch";
+    };
 
     functions = {
       fish_prompt = ''

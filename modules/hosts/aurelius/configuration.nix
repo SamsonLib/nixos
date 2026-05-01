@@ -19,7 +19,7 @@
             { ... }:
             {
               imports = [
-                self.homeManagerModules.kitty
+                self.homeManagerModules.terminal
                 self.homeManagerModules.rofi
                 self.homeManagerModules.hyprland
                 self.homeManagerModules.zed
@@ -36,7 +36,7 @@
                 chatterino7
               ];
 
-              home.stateVersion = "25.11";
+              home.stateVersion = "26.05";
               home.username = "samson";
               programs.home-manager.enable = true;
               home.homeDirectory = "/home/samson";
@@ -199,6 +199,6 @@
         "flakes"
       ];
 
-      system.stateVersion = "25.11";
+      system.stateVersion = "26.05";
     };
 }
