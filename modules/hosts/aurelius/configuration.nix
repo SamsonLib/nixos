@@ -24,6 +24,7 @@
               self.homeManagerModules.hyprland
               self.homeManagerModules.zed
               self.homeManagerModules.eza
+              self.homeManagerModules.bat
               self.homeManagerModules.obsidian
               self.homeManagerModules.firefox
               self.homeManagerModules.nemo
