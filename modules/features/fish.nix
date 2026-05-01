@@ -1,8 +1,12 @@
 { ... }:
 {
   flake.homeManagerModules.fish =
-    { ... }:
+    { pkgs, ... }:
     {
+      home.packages = [
+        pkgs.grc
+      ];
+
       programs.fish = {
         enable = true;
 
@@ -14,6 +18,17 @@
           cat = "bat";
           nurse = "sudo nixos-rebuild switch";
         };
+
+        plugins = [
+          {
+            name = "grc";
+            src = pkgs.fishPlugins.grc.src;
+          }
+          {
+            name = "colored-man-pages";
+            src = pkgs.fishPlugins.colored-man-pages.src;
+          }
+        ];
 
         functions = {
           fish_prompt = ''
@@ -62,10 +77,6 @@
                 $stat \
                 $nix_indicator
             end
-          '';
-
-          nr = ''
-            	nix run nixpkgs#$argv[1]
           '';
         };
 

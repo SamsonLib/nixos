@@ -14,34 +14,33 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users = {
-          samson =
-            { ... }:
-            {
-              imports = [
-                self.homeManagerModules.terminal
-                self.homeManagerModules.rofi
-                self.homeManagerModules.hyprland
-                self.homeManagerModules.zed
-                self.homeManagerModules.eza
-                self.homeManagerModules.obsidian
-                self.homeManagerModules.firefox
-                self.homeManagerModules.nemo
-                self.homeManagerModules.blender
-                self.homeManagerModules.prismlauncher
-              ];
+        extraSpecialArgs = { inherit self; };
+        users.samson =
+          { ... }:
+          {
+            imports = [
+              self.homeManagerModules.terminal
+              self.homeManagerModules.rofi
+              self.homeManagerModules.hyprland
+              self.homeManagerModules.zed
+              self.homeManagerModules.eza
+              self.homeManagerModules.obsidian
+              self.homeManagerModules.firefox
+              self.homeManagerModules.nemo
+              self.homeManagerModules.blender
+              self.homeManagerModules.prismlauncher
+            ];
 
-              home.packages = with pkgs; [
-                hyprshot
-                chatterino7
-              ];
+            home.packages = with pkgs; [
+              hyprshot
+              chatterino7
+            ];
 
-              home.stateVersion = "26.05";
-              home.username = "samson";
-              programs.home-manager.enable = true;
-              home.homeDirectory = "/home/samson";
-            };
-        };
+            home.stateVersion = "26.05";
+            home.username = "samson";
+            programs.home-manager.enable = true;
+            home.homeDirectory = "/home/samson";
+          };
       };
 
       environment.systemPackages = [
