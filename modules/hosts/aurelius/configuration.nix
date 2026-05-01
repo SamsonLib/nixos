@@ -28,6 +28,7 @@
                 self.homeManagerModules.firefox
                 self.homeManagerModules.nemo
                 self.homeManagerModules.blender
+                self.homeManagerModules.prismlauncher
               ];
 
               home.packages = with pkgs; [
