@@ -31,11 +31,13 @@
               self.homeManagerModules.zed
               self.homeManagerModules.zoxide
               self.homeManagerModules.direnv
+              self.homeManagerModules.emacs
             ];
 
             home.packages = with pkgs; [
               hyprshot
               chatterino7
+              inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
             ];
 
             home.stateVersion = "26.05";
