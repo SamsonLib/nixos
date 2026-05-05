@@ -3,11 +3,11 @@
   flake.homeManagerModules.emacs =
     { pkgs, ... }:
     {
-      services.emacs = {
-        enable = true;
-        client.enable = true;
-        defaultEditor = true;
-      };
+      home.packages = with pkgs; [
+        pyright # Python
+        rust-analyzer # Rust
+        nil # Nix
+      ];
 
       programs.emacs = {
         enable = true;
@@ -16,51 +16,154 @@
           (setq
            gc-cons-threshold 402653184
            gc-cons-percentage 0.6)
-          (setq inhibit-startup-message t)  ; Don't show the splash screen
+          (setq inhibit-startup-message t)
           (setq-default
-           indent-tabs-mode nil ;; Default to indenting with spaces
+           indent-tabs-mode nil
            bidi-display-reordering nil
            cursor-in-non-selected-windows nil
            )
-           ;; Set non-package-specific global variables
-           (setq
-            max-specpdl-size 5000
-            shell-file-name "/run/current-system/sw/bin/bash" ;; Full path to shell (NixOS)
-            make-backup-files nil ;; Don't pullute folders with backups
-            auto-save-default nil ;; Don't auto-save
-            initial-major-mode 'eshell-mode ;; Start the *scratch* buffer in eshell-mode
-            initial-scratch-message nil ;; Don't print a bunch of text in *scratch*
-            completion-at-point-functions nil
-            user-full-name "Samson" ;; My full name
-            custom-file "/dev/null" ;; Don't save customizations, just delete them
-            recentf-max-saved-items nil ;; Save the entire recent files list
-            recentf-keep '(recentf-keep-default-predicate remote-file-p) ;; Exclude remote files from the recent files list
-            x-wait-for-event-timeout nil
-            confirm-kill-emacs 'y-or-n-p ;; Ask before exiting Emacs
-            disabled-command-function nil
-            password-cache t ;; Cache passwords
-            password-cache-expiry 3600 ;; Expire after one hour
-            inhibit-startup-message t
-            visible-cursor nil ;; Reduce cursor annoyance
-            scroll-step 1 ;; Don't jump around so much while scrolling
-            focus-follows-mouse nil ;; Prevent lsp-ui from stealing mouse focus
-            sentence-end-double-space nil ;; Don't whine about spaces after periods
-            )
+          (setq
+           max-specpdl-size 5000
+           shell-file-name "/run/current-system/sw/bin/bash"
+           make-backup-files nil
+           auto-save-default nil
+           initial-major-mode 'eshell-mode
+           initial-scratch-message nil
+           completion-at-point-functions nil
+           user-full-name "Samson"
+           custom-file "/dev/null"
+           recentf-max-saved-items nil
+           recentf-keep '(recentf-keep-default-predicate remote-file-p)
+           x-wait-for-event-timeout nil
+           confirm-kill-emacs 'y-or-n-p
+           disabled-command-function nil
+           password-cache t
+           password-cache-expiry 3600
+           visible-cursor nil
+           scroll-step 1
+           focus-follows-mouse nil
+           sentence-end-double-space nil
+           )
+          (menu-bar-mode -1)
+          (tool-bar-mode -1)
+          (scroll-bar-mode -1)
+          (blink-cursor-mode -1)
+          (show-paren-mode -1)
+          (tooltip-mode -1)
+          (global-hl-line-mode)
+          (column-number-mode)
+          (recentf-mode)
+          (server-start)
 
-           (menu-bar-mode -1) ;; Don't display menu bar
-           (tool-bar-mode -1) ;; Don't display tool bar
-           (scroll-bar-mode -1) ;; Don't display scroll bar
-           (blink-cursor-mode -1) ;; Don't blink the cursor
-           (show-paren-mode -1) ;; Don't highlight parentheses
-           (tooltip-mode -1) ;; Don't display tooltips as popups, use the echo area instead
-           (global-hl-line-mode) ;; Highlight the current line in all buffers
+          ;; ── Evil ────────────────────────────────────────────────────────────
+          (setq evil-want-integration t
+                evil-want-keybinding nil   ; required before evil-collection
+                evil-want-C-u-scroll t
+                evil-undo-system 'undo-redo)
+          (require 'evil)
+          (evil-mode 1)
 
-           (column-number-mode) ;; Display column number in the mode line
-           (recentf-mode) ;; Enable recording recently-visited files
+          (require 'evil-collection)
+          (evil-collection-init)
+
+          ;; ── Magit ───────────────────────────────────────────────────────────
+          (require 'magit)
+          (global-set-key (kbd "C-c g") #'magit-status)
+
+          ;; ── Vertico (minibuffer completion UI) ──────────────────────────────
+          (require 'vertico)
+          (vertico-mode 1)
+          (setq vertico-cycle t)
+
+          ;; ── Orderless (fuzzy/space-separated completion style) ───────────────
+          (require 'orderless)
+          (setq completion-styles '(orderless basic)
+                completion-category-overrides '((file (styles basic partial-completion))))
+
+          ;; ── Consult (enhanced search & navigation commands) ──────────────────
+          (require 'consult)
+          (global-set-key (kbd "C-s")     #'consult-line)
+          (global-set-key (kbd "C-x b")   #'consult-buffer)
+          (global-set-key (kbd "C-x C-r") #'consult-recent-file)
+          (global-set-key (kbd "M-g g")   #'consult-goto-line)
+          (global-set-key (kbd "M-s r")   #'consult-ripgrep)
+
+          ;; ── Embark (context actions on minibuffer candidates) ────────────────
+          (require 'embark)
+          (require 'embark-consult)
+          (global-set-key (kbd "C-.") #'embark-act)
+          (global-set-key (kbd "C-;") #'embark-dwim)
+          (global-set-key (kbd "C-h B") #'embark-bindings)
+          (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
+
+          ;; ── Marginalia (annotations in minibuffer) ───────────────────────────
+          ;; pairs well with vertico+consult
+          (require 'marginalia)
+          (marginalia-mode 1)
+
+          ;; ── Company (in-buffer completion) ───────────────────────────────────
+          (require 'company)
+          (setq company-idle-delay 0.2
+                company-minimum-prefix-length 2
+                company-tooltip-align-annotations t
+                company-selection-wrap-around t)
+          (global-company-mode 1)
+
+          ;; ── LSP Mode ─────────────────────────────────────────────────────────
+          (require 'lsp-mode)
+          (setq lsp-keymap-prefix "C-c l"
+                lsp-idle-delay 0.5
+                lsp-log-io nil               ; set t to debug
+                lsp-completion-provider :company-capf
+                lsp-headerline-breadcrumb-enable nil)
+          ;; Hook into common languages — add/remove as needed
+          (add-hook 'python-mode-hook    #'lsp-deferred)
+          (add-hook 'js-mode-hook        #'lsp-deferred)
+          (add-hook 'typescript-mode-hook #'lsp-deferred)
+          (add-hook 'rust-mode-hook      #'lsp-deferred)
+          (add-hook 'go-mode-hook        #'lsp-deferred)
+          (add-hook 'c-mode-hook         #'lsp-deferred)
+          (add-hook 'c++-mode-hook       #'lsp-deferred)
+          (add-hook 'nix-mode-hook       #'lsp-deferred)
+
+          ;; lsp-ui (hover docs, sideline hints)
+          (require 'lsp-ui)
+          (setq lsp-ui-doc-enable t
+                lsp-ui-doc-position 'at-point
+                lsp-ui-sideline-enable t
+                lsp-ui-sideline-show-diagnostics t
+                lsp-ui-sideline-show-hover nil)
+
+          ;; ── Wind down ────────────────────────────────────────────────────────
+          (setq
+           gc-cons-threshold 16777216
+           gc-cons-percentage 0.1)
+          (provide 'init)
         '';
-        extraPackages = with pkgs.emacsPackages; [
-          evil
-        ];
+        extraPackages =
+          epkgs: with epkgs; [
+            # evil
+            evil
+            evil-collection
+
+            # git
+            magit
+
+            # minibuffer / completion
+            vertico
+            orderless
+            consult
+            embark
+            embark-consult
+            marginalia
+
+            # in-buffer completion
+            company
+
+            # lsp
+            lsp-mode
+            lsp-ui
+          ];
       };
     };
 }
