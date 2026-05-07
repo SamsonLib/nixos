@@ -4,9 +4,9 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        pyright # Python
-        rust-analyzer # Rust
-        nil # Nix
+        pyright
+        rust-analyzer
+        nil
       ];
 
       programs.emacs = {
@@ -126,6 +126,9 @@
           (add-hook 'c++-mode-hook       #'lsp-deferred)
           (add-hook 'nix-mode-hook       #'lsp-deferred)
 
+          (require 'lsp-julia)
+          (require 'julia-mode)
+
           ;; lsp-ui (hover docs, sideline hints)
           (require 'lsp-ui)
           (setq lsp-ui-doc-enable t
@@ -156,7 +159,8 @@
             embark
             embark-consult
             marginalia
-
+            julia-mode
+            lsp-julia
             # in-buffer completion
             company
 

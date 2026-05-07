@@ -6,6 +6,8 @@
       imports = [
         self.nixosModules.aureliusHardware
         self.nixosModules.git
+        self.nixosModules.networking
+        self.nixosModules.virtualization
         inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager
       ];
@@ -74,16 +76,6 @@
         clean.enable = true;
         clean.extraArgs = "--keep-since 4d --keep 3";
         flake = "/etc/nixos/";
-      };
-
-      networking = {
-        hostName = "aurelius";
-        networkmanager.enable = true;
-        nameservers = [
-          "1.1.1.1"
-          "1.0.0.1"
-        ];
-        firewall.checkReversePath = false;
       };
 
       time.timeZone = "Europe/Berlin";
