@@ -15,6 +15,11 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        sharedModules = [
+          {
+            stylix.targets.emacs.enable = true;
+          }
+        ];
         extraSpecialArgs = { inherit self; };
         users.samson =
           { ... }:
@@ -31,6 +36,7 @@
               self.homeManagerModules.rofi
               self.homeManagerModules.terminal
               self.homeManagerModules.zed
+              self.homeManagerModules.krita
               self.homeManagerModules.zoxide
               self.homeManagerModules.direnv
               self.homeManagerModules.emacs
