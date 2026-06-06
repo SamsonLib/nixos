@@ -2,29 +2,16 @@
 {
   flake.nixosModules.networking = {
     networking = {
+      firewall.enable = false;
       hostName = "aurelius";
       networkmanager.enable = true;
-      networkmanager.dns = "none";
+      # networkmanager.dns = "none";
 
-      networkmanager.connectionConfig = {
-        "ipv4.ignore-auto-dns" = true;
-        "ipv6.ignore-auto-dns" = true;
-      };
-
-      nameservers = [ "127.0.0.1" ];
+      nameservers = [
+        "1.0.0.1"
+        "1.1.1.1"
+      ];
       firewall.checkReversePath = false;
-    };
-
-    services.dnsmasq.enable = false;
-
-    services.dnscrypt-proxy = {
-      enable = true;
-      settings = {
-        ipv6_servers = true;
-        require_dnssec = true;
-        server_names = [ "cloudflare" ];
-        listen_addresses = [ "127.0.0.1:53" ];
-      };
     };
 
     time.timeZone = "Europe/Berlin";

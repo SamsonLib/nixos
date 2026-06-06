@@ -6,7 +6,7 @@
       programs.kitty = {
         enable = true;
         settings = {
-          shell = "fish";
+          shell = "nu";
           show_hyprlink_targets = "yes";
           enable_audio_bell = false;
           confirm_os_window_close = 0;

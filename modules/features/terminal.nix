@@ -5,8 +5,9 @@
     {
       imports = [
         self.homeManagerModules.kitty
-        self.homeManagerModules.bash
-        self.homeManagerModules.fish
+        # self.homeManagerModules.bash
+        # self.homeManagerModules.fish
+        self.homeManagerModules.nu
       ];
     };
 }

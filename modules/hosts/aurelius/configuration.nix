@@ -7,7 +7,7 @@
         self.nixosModules.aureliusHardware
         self.nixosModules.git
         self.nixosModules.networking
-        self.nixosModules.virtualization
+        # self.nixosModules.virtualization
         inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager
       ];
@@ -26,7 +26,7 @@
           {
             imports = [
               self.homeManagerModules.bat
-              self.homeManagerModules.blender
+              # self.homeManagerModules.blender
               self.homeManagerModules.eza
               self.homeManagerModules.firefox
               self.homeManagerModules.hyprland
@@ -36,17 +36,24 @@
               self.homeManagerModules.rofi
               self.homeManagerModules.terminal
               self.homeManagerModules.zed
-              self.homeManagerModules.krita
+              # self.homeManagerModules.krita
               self.homeManagerModules.zoxide
               self.homeManagerModules.direnv
-              self.homeManagerModules.emacs
+              # self.homeManagerModules.emacs
             ];
 
             home.packages = with pkgs; [
               hyprshot
               chatterino7
-              inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
+              playerctl
+              thunderbird
+              # aseprite
+
+              # onlyoffice-desktopeditors
+              # inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
             ];
+
+            programs.vesktop.enable = true;
 
             home.stateVersion = "26.05";
             home.username = "samson";
@@ -57,15 +64,75 @@
 
       environment.systemPackages = [
         pkgs.vim
+        pkgs.openvpn
+        pkgs.anki-bin
+        pkgs.reaper
+        pkgs.rapidraw
+        inputs.sheets.packages.${pkgs.stdenv.hostPlatform.system}.default
+        inputs.hytale-launcher.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
+
+      environment.shells = [
+        pkgs.nushell
+      ];
+
+      services.asusd = {
+        enable = true;
+      };
+
+      networking.firewall.allowedTCPPorts = [
+        8384
+        22000
+      ];
+      networking.firewall.allowedUDPPorts = [
+        22000
+        21027
+      ];
+      services.syncthing = {
+        user = "samson";
+        group = "users";
+        configDir = "/home/samson/.config/syncthing";
+        enable = true;
+        openDefaultPorts = true;
+        settings = {
+          devices = {
+            "SM-T733" = {
+              id = "55KNMUI-QFAUIGX-2ZO75HJ-WVCFIML-34TBG4D-SMJWDPH-XOY73YI-5OG4XQS";
+            };
+          };
+
+          folders = {
+            "RAM" = {
+              path = "/home/samson/RAM";
+              devices = [ "SM-T733" ];
+            };
+          };
+
+          gui.user = "samson";
+        };
+      };
+
+      programs.bash.enable = true;
+      programs.bash.interactiveShellInit = ''
+        if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+          exec nu
+        fi
+      '';
 
       stylix = {
         enable = true;
         image = pkgs.fetchurl {
-          url = "https://w.wallhaven.cc/full/po/wallhaven-powqje.jpg";
-          hash = "sha256-6whG3D30UjQ40WDbwCxYFtI0fOb81KildTNhAcebYek=";
+          url = "https://w.wallhaven.cc/full/21/wallhaven-213edy.png";
+          hash = "sha256-5fnOaB4ozW49gJFGZKpVfGMTo8EaFTPT4b6EIr4lcKA=";
         };
-        polarity = "dark";
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/helios.yaml";
+        polarity = "either";
+        fonts = {
+          monospace = {
+            package = pkgs.nerd-fonts.lilex;
+            name = "Lilex Nerd Font Mono";
+          };
+        };
       };
 
       boot.loader = {
@@ -159,6 +226,8 @@
         wlr.enable = true;
         extraPortals = [
           pkgs.xdg-desktop-portal-wlr
+          pkgs.xdg-desktop-portal-hyprland
+          pkgs.xdg-desktop-portal-gtk
         ];
       };
 
@@ -186,6 +255,7 @@
 
       fonts.packages = [
         pkgs.nerd-fonts.lilex
+        pkgs.font-awesome_4
       ];
 
       programs.steam = {
@@ -199,6 +269,10 @@
         "nix-command"
         "flakes"
       ];
+      nix.settings = {
+        substituters = [ "https://hyprland.cachix.org" ];
+        trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+      };
 
       system.stateVersion = "26.05";
     };

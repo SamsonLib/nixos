@@ -12,8 +12,19 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    split-monitor-workspaces = {
+      url = "github:zjeffer/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
+    hytale-launcher.url = "github:JPyke3/hytale-launcher-nix";
+
     helium = {
       url = "github:AlvaroParker/helium-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sheets = {
+      url = "github:maaslalani/sheets";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

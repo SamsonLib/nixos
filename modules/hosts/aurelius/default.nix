@@ -6,10 +6,7 @@
     ];
   };
 
-  flake.homeConfigurations.samson =
-    inputs.lib.homeManagerConfiguration {
-      modules = [
-        #self.homeModules.kitty
-      ];
-    };
+  flake.homeConfigurations.samson = inputs.lib.homeManagerConfiguration {
+    modules = [ ];
+  };
 }

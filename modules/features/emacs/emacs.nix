@@ -1,13 +1,15 @@
 { ... }:
 {
   flake.homeManagerModules.emacs =
-    { ... }:
+    { pkgs, ... }:
     {
-      # home.packages = with pkgs; [
-      #   pyright
-      #   rust-analyzer
-      #   nil
-      # ];
+      home.packages = with pkgs; [
+        pyright
+        rust-analyzer
+        nil
+        zls
+        zig-zlint
+      ];
 
       programs.emacs = {
         enable = true;
@@ -25,6 +27,7 @@
             marginalia
             consult
             vertico
+            zig-mode
           ];
       };
     };
